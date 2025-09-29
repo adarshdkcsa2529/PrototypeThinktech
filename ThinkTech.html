@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ThinkTech — Prototype</title>
+<style>
+  :root{
+    --bg:#0f1724; --card:#0b1220; --accent:#06b6d4; --muted:#9aa4b2;
+    --glass: rgba(255,255,255,0.03);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  html,body{height:100%;margin:0;background:linear-gradient(180deg,#071022 0%, #07182a 100%);color:#e6eef6}
+  .app {max-width:980px;margin:28px auto;padding:24px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700;color:#022}
+  h1{margin:0;font-size:20px}
+  p.lead{margin:0;color:var(--muted);font-size:13px}
+  nav{margin-top:18px;display:flex;gap:10px}
+  .btn{background:var(--accent);color:#022;padding:8px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+  .screens{display:grid;grid-template-columns:1fr;gap:18px;margin-top:20px}
+  .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 8px 24px rgba(2,6,23,0.6)}
+  .two-col{display:flex;gap:14px}
+  .col{flex:1}
+  .info-card{padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02)}
+  .step{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+  .step .num{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;font-weight:700}
+  label{display:block;font-weight:700;margin-bottom:6px}
+  input[type="text"]{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+  .result{padding:12px;border-radius:8px;margin-top:12px}
+  .result.ok{background:linear-gradient(90deg, rgba(6,182,212,0.14), rgba(34,197,94,0.06));color:#bff1f6;border:1px solid rgba(6,182,212,0.12)}
+  .result.warn{background:linear-gradient(90deg, rgba(250,204,21,0.06), rgba(245,158,11,0.04));color:#fffbda;border:1px solid rgba(245,158,11,0.08)}
+  .small{font-size:13px;color:var(--muted)}
+  .poster{display:flex;gap:14px;align-items:center;justify-content:space-between;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));padding:14px;border-radius:10px}
+  .poster .qr{width:120px;height:120px;background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#022;font-weight:800}
+  .lang-switch{display:flex;gap:8px;align-items:center}
+  footer{margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .muted{color:var(--muted);font-size:13px}
+  /* responsive */
+  @media (max-width:720px){ .two-col{flex-direction:column} .poster{flex-direction:column;align-items:flex-start} .poster .qr{width:96px;height:96px} }
+</style>
+</head>
+<body>
+<div class="app" role="application" aria-label="ThinkTech prototype">
+  <header>
+    <div class="brand">
+      <div class="logo">Ttech</div>
+      <div>
+        <h1>ThinkTech DBT</h1>
+        <p class="lead">Prototype — Demo for SIH</p>
+      </div>
+    </div>
+    <div class="lang-switch">
+      <label class="small" for="lang">Language</label>
+      <select id="lang" aria-label="Language select">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+      </select>
+      <button id="startDemo" class="btn">Start Demo</button>
+    </div>
+  </header>
+
+  <nav>
+    <button class="btn" data-screen="awareness">Awareness</button>
+    <button class="btn ghost" data-screen="guide">Status Guide</button>
+    <button class="btn ghost" data-screen="demo">Demo Check</button>
+  </nav>
+
+  <main class="screens">
+    <!-- Screen 1: Awareness -->
+    <section id="awareness" class="card" role="region" aria-labelledby="awarenessTitle">
+      <h2 id="awarenessTitle">Aadhaar Linked ≠ DBT Enabled</h2>
+      <div class="two-col" style="margin-top:12px">
+        <div class="col info-card">
+          <h3>What is Aadhaar Linked?</h3>
+          <p class="small">Your Aadhaar is recorded at your bank. This is an identity connection only.</p>
+          <ul class="small">
+            <li>Aadhaar recorded in bank account details</li>
+            <li>Used for KYC & identification</li>
+            <li>Doesn't guarantee govt transfers</li>
+          </ul>
+        </div>
+        <div class="col info-card">
+          <h3>What is DBT-enabled (Aadhaar-seeded)?</h3>
+          <p class="small">Your Aadhaar is mapped in payment networks (NPCI) to allow Direct Benefit Transfer.</p>
+          <ul class="small">
+            <li>Required for scholarship DBT disbursement</li>
+            <li>If missing → scholarship delays</li>
+            <li>Students must ensure seeding is active</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:14px;align-items:center">
+        <button class="btn" data-screen="guide">How to Check →</button>
+        <button class="btn ghost" id="showPoster">Show Poster Mockup</button>
+      </div>
+    </section>
+
+    <!-- Screen 2: Status Guide -->
+    <section id="guide" class="card" role="region" aria-labelledby="guideTitle" hidden>
+      <h2 id="guideTitle">How to check DBT status</h2>
+      <div style="margin-top:12px">
+        <div class="step">
+          <div class="num">1</div>
+          <div>
+            <label>Visit Official NPCI/Bank Portal</label>
+            <div class="small">Go to the bank/NPCI website or use the 'Aadhaar mapper' option (ask your bank if you can't find it).</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="num">2</div>
+          <div>
+            <label>Enter last 4 digits of Aadhaar</label>
+            <div class="small">For security, portals often ask for only the last 4 digits to show status.</div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="num">3</div>
+          <div>
+            <label>Check mapper status</label>
+            <div class="small">Status will show 'Active' / 'Inactive' or similar. If inactive, follow action steps below or contact bank.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="small">
+          <strong>Important:</strong> Do not share your full Aadhaar number publicly. Use official portals or visit your bank branch.
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <button class="btn" data-screen="demo">Try Demo Check</button>
+          <button class="btn ghost" id="downloadGuide">Download Action Guide</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screen 3: Demo Check -->
+    <section id="demo" class="card" role="region" aria-labelledby="demoTitle" hidden>
+      <h2 id="demoTitle">Demo: Check DBT Status (Simulated)</h2>
+
+      <div style="margin-top:12px" class="info-card">
+        <label for="aad4">Enter last 4 digits of Aadhaar (demo)</label>
+        <input id="aad4" type="text" maxlength="4" placeholder="e.g., 1234" inputmode="numeric" aria-label="last four digits">
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button id="checkBtn" class="btn">Check Status</button>
+          <button id="resetBtn" class="btn ghost">Reset</button>
+        </div>
+
+        <div id="result" class="result" style="display:none"></div>
+
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button id="downloadAction" class="btn" style="display:none">Download Action Guide</button>
+          <button id="printAction" class="btn ghost" style="display:none">Print Action Guide (Save as PDF)</button>
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:18px 0">
+
+      <h3>Poster mockup for Gram Panchayat / School</h3>
+      <div class="poster">
+        <div>
+          <strong>Put this poster on the noticeboard</strong>
+          <p class="small">Students scan QR → Open DBT Scholar Assist → Check status</p>
+          <ul class="small">
+            <li>Simple steps</li>
+            <li>Multilingual support</li>
+            <li>Printable A4 poster</li>
+          </ul>
+        </div>
+        <img class="qr" src="Untitled 3.png" alt="QR Code">
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="muted">Prototype • ThinkTech — demo for SIH</div>
+    <div>
+      <span class="small">Team: ThinkTech</span>
+    </div>
+  </footer>
+</div>
+
+<!-- Hidden printable area for action guide -->
+<iframe id="printFrame" style="display:none"></iframe>
+
+<script>
+  // i18n strings
+  const I18N = {
+    en: { title:"Aadhaar Linked ≠ DBT Enabled" },
+    hi: { title:"आधार लिंक ≠ DBT सक्षम" }
+  };
+
+  const screens = ["awareness","guide","demo"];
+  function showScreen(id){
+    screens.forEach(s => document.getElementById(s).hidden = (s !== id));
+    document.querySelectorAll('nav button').forEach(b => {
+      b.classList.toggle('btn', b.dataset.screen === id);
+      b.classList.toggle('ghost', b.dataset.screen !== id);
+    });
+  }
+
+  document.querySelectorAll('nav button, [data-screen]').forEach(b => {
+    b.addEventListener('click', () => showScreen(b.dataset.screen));
+  });
+
+  // Language switcher
+  const langSel = document.getElementById('lang');
+  function localize(){
+    const L = I18N[langSel.value];
+    document.getElementById('awarenessTitle').innerText = L.title;
+  }
+  langSel.addEventListener('change', localize);
+  localize();
+
+  // Generate Action Guide text
+  function generateActionGuideText({enabled, aad}){
+  const lines = [];
+  if(enabled){
+    lines.push("DBT Status: ACTIVE (Demo)");
+    lines.push("");
+    lines.push("Your account appears DBT-enabled. No further action needed for DBT seeding.");
+    lines.push("");
+    lines.push("Recommendation (Demo):");
+    lines.push("1. Keep a screenshot of the status for scholarship office.");
+    lines.push("2. If scholarship still delayed, present this status to school/college admin and bank.");
+    lines.push("3. Contact your bank branch for confirmation if asked.");
+  } else {
+    lines.push("DBT Status: NOT ENABLED (Demo)");
+    lines.push("");
+    lines.push("Your account is NOT DBT-enabled. To enable it:");
+    lines.push("");
+    lines.push("Immediate steps:");
+    lines.push("1. Visit your bank branch with original Aadhaar and bank passbook/ID.");
+    lines.push("2. Request 'Aadhaar seeding for DBT/NPCI mapper' or 'Aadhaar linking for DBT'.");
+    lines.push("3. Bank may take a few days to process. Keep acknowledgment receipt.");
+    lines.push("");
+    lines.push("If bank cannot help:");
+    lines.push("- Contact the scholarship office at your school/college and inform them about the seeding status.");
+    lines.push("- Use official NPCI/Bank mapper portal (if available) to check status.");
+  }
+  lines.push("");
+  lines.push("This is a demonstration action guide created by DBT Scholar Assist prototype.");
+  return lines.join("\n");
+}
+
+  // Utility: download file
+  function downloadTextFile(text, filename){
+    const blob = new Blob([text], {type:'text/plain'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  // Status Guide download button
+  const downloadGuideBtn = document.getElementById('downloadGuide');
+  downloadGuideBtn.addEventListener('click', ()=>{
+    const sampleText = generateActionGuideText({enabled:false, aad:'demo'});
+    downloadTextFile(sampleText, 'Action_Guide_Sample.txt');
+  });
+
+  // Demo Check
+  const aad4 = document.getElementById('aad4');
+  const checkBtn = document.getElementById('checkBtn');
+  const result = document.getElementById('result');
+  const downloadAction = document.getElementById('downloadAction');
+  const printAction = document.getElementById('printAction');
+  const resetBtn = document.getElementById('resetBtn');
+
+  checkBtn.addEventListener('click', ()=>{
+    const val = (aad4.value || "").trim();
+    if(!/^\d{4}$/.test(val)){
+      result.style.display = "block";
+      result.className = "result warn";
+      result.innerText = "Please enter 4 digits";
+      downloadAction.style.display = "none"; printAction.style.display = "none";
+      return;
+    }
+    const enabled = parseInt(val[3]) % 2 === 0; // even -> active
+    result.style.display = "block";
+    result.className = enabled ? "result ok" : "result warn";
+    result.innerText = enabled ? "DBT Status: ACTIVE (Demo)" : "DBT Status: NOT ENABLED (Demo)";
+
+    // Show download/print buttons
+    downloadAction.style.display = "inline-block";
+    printAction.style.display = "inline-block";
+
+    const payload = generateActionGuideText({enabled, aad: val});
+    downloadAction.onclick = () => downloadTextFile(payload, `Action_Guide_${val}.txt`);
+    printAction.onclick = () => {
+      const iframe = document.getElementById('printFrame');
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`<pre>${payload}</pre>`);
+      doc.close();
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+    };
+  });
+
+  resetBtn.addEventListener('click', ()=>{
+    aad4.value = "";
+    result.style.display = "none";
+    downloadAction.style.display = "none";
+    printAction.style.display = "none";
+  });
+
+  // Poster highlight
+  document.getElementById('showPoster').addEventListener('click', ()=>{
+    showScreen('demo');
+    const p = document.querySelector('.poster');
+    p.style.boxShadow = '0 12px 40px rgba(0,0,0,0.6)';
+    setTimeout(()=> p.style.boxShadow='', 1500);
+  });
+
+  // Start screen
+  showScreen('awareness');
+</script>
+
+</body>
+</html>  
